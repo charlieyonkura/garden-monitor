@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    text-align: center
+}
+table {
+    border: 1px solid black;
+}
+td {
+    border: 1px solid black;
+}
+h1 {
+    text-align: center;
+}
+h4 {
+    text-align: center;
+}
+form {
+    display: inline-block
+}
+.content{
+    margin: auto;
+    width: 60%;
+}
+.yourMomCenter{
+    margin-left: auto;
+    margin-right: auto;
+}
