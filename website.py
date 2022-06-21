@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import exifread
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
@@ -52,6 +53,14 @@ def update(id):
             return "Error updating task"
     else:
         return render_template("update.html", task=task)
+
+@app.route("/webcam/")
+def webcam():
+    img = open("Olympus_C8080WZ.jpg", "rb")
+    tags = exifread.process_file(img)
+    dt = tags["Image DateTime"] #process string to make more user-friendly?
+
+    return "a"
 
 if __name__ == "__main__":
     app.run(debug = True)
