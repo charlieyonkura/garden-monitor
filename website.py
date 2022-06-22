@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import exifread
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
 db = SQLAlchemy(app)
 
+"""
 class Todo(db.Model): #setting columns for database
     id = db.Column(db.Integer, primary_key = True)
     content = db.Column(db.String(200), nullable = False)
@@ -13,24 +15,35 @@ class Todo(db.Model): #setting columns for database
 
     def __repr__(self): #function to return string
         return "<Task %r>" % self.id
+"""
 
+class PlantData(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    date_recorded = db.Column(db.DateTime, default = datetime.utcnow)
+    humidity = db.Column(db.Float, nullable = False)
+    temperature = db.Column(db.Float, nullable = False)
+
+class WateringEvent(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    date_watered = db.Column(db.DateTime, default = datetime.utcnow)
 
 @app.route("/", methods = ["POST", "GET"])
 def index():
     if request.method == "POST":
-        task_content = request.form["content"] #id from form
-        new_task = Todo(content=task_content)
+        #task_content = request.form["content"] #id from form
+        #new_task = Todo(content=task_content)
         try:
-            db.session.add(new_task) #add to database
-            db.session.commit()
+            #db.session.add(new_task) #add to database
+            #db.session.commit()
             return redirect("/")
         except:
             return "Error adding task"
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all() #returns all task objects
-        return render_template("index.html", tasks=tasks) #checks in \templates\
+        #tasks = Todo.query.order_by(Todo.date_created).all() #returns all task objects
+        buffer = PlantData.query.order_by(PlantData.date_recorded).all()
+        return render_template("index.html", data=buffer)
 
-@app.route("/delete/<int:id>")
+"""@app.route("/delete/<int:id>")
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
     try:
@@ -52,6 +65,14 @@ def update(id):
             return "Error updating task"
     else:
         return render_template("update.html", task=task)
+"""
+"""@app.route("/webcam/")
+def webcam():
+    img = open("Olympus_C8080WZ.jpg", "rb")
+    tags = exifread.process_file(img)
+    dt = tags["Image DateTime"] #process string to make more user-friendly?
 
+    return "a"
+"""
 if __name__ == "__main__":
     app.run(debug = True)
