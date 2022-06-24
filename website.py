@@ -1,7 +1,13 @@
+from importlib.resources import contents
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 import exifread
+
+webcamPath = os.path.relpath("static\images")
+imagePrefix = "img"
+numberLength = 3 #abcdxxx.jpg -> numberLength = 3
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
@@ -56,11 +62,15 @@ def update(id):
 
 @app.route("/webcam/")
 def webcam():
-    img = open("Olympus_C8080WZ.jpg", "rb")
-    tags = exifread.process_file(img)
-    dt = tags["Image DateTime"] #process string to make more user-friendly?
-
-    return "a"
+    contents = os.listdir(webcamPath)
+    files = [image for image in contents if image[:len(imagePrefix)] == imagePrefix] #if it contains the prefix, allow through filter
+    image = str(max([int(n[len(imagePrefix):-4]) for n in files])) #removes prefix & file extension, returns max image number
+    
+    path = os.path.join(webcamPath, imagePrefix + ("0" * (numberLength - len(image))) + image + files[0][-4:]) #frankenstein together the path
+    tags = exifread.process_file(open(path, "rb"))
+    datetime_obj = datetime.strptime(tags["Image DateTime"].printable, "%Y:%m:%d %H:%M:%S")
+    
+    return render_template("webcam.html", img = path.replace("\\", "/"), date = datetime_obj)
 
 if __name__ == "__main__":
     app.run(debug = True)
