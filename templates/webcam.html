@@ -5,8 +5,9 @@
 
 {% block body %}
 <div class="content">
-    <img src="../{{imgPath}}" alt="{{imgPath}}">
+    {%for img in imgs%}
+    <img src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
     <br>
-    {{imgDateTime}}
+    {%endfor%}
 </div>
 {% endblock %}
