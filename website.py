@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 import exifread
 
-imagesPath = os.path.relpath("static\images")
+imagesPath = os.path.relpath("static/images")
 imagePrefix = "img"
 
 app = Flask(__name__)
