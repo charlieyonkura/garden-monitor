@@ -5,7 +5,8 @@
 
 {% block body %}
 <div class="content">
-    <img src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
-    <br>
+    <a href="webcam">
+        <img class="visible content" src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
+    </a>
 </div>
 {% endblock %}

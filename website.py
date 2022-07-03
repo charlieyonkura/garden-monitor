@@ -6,7 +6,7 @@ import os
 import exifread
 
 imagesPath = os.path.relpath("static/images")
-imagePrefix = "image"
+imagePrefix = "img"
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"

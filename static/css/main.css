@@ -15,14 +15,31 @@ h1 {
 h4 {
     text-align: center;
 }
-form {
-    display: inline-block
-}
 .content{
     margin: auto;
     width: 60%;
 }
-.yourMomCenter{
+.block{
+    background-color: #211F1F;
+    padding: 25px
+}
+
+img.visible {
+    display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+}
+img.transparent {
+    display: none;
+}
+img.active {
+    display: inline;
+}
+img.hidden {
+    display: none;
+}
+img.button {
+    width: 20%;
+    cursor: pointer;
 }
