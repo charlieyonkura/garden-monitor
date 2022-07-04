@@ -1,7 +1,7 @@
 from importlib.resources import contents
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import exifread
 
@@ -11,6 +11,8 @@ imagePrefix = "img"
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db = SQLAlchemy(app)
+
+IMAGE_INTERVAL = 10 #minutes
 
 class Image():
     images = []
@@ -49,7 +51,8 @@ def index():
 @app.route("/webcam/")
 def webcam():
     Image.getImages(imagesPath, imagePrefix)
-    return render_template("webcam.html", imgs = Image.images)
+    nextDateTime = Image.getMostRecent().datetime + timedelta(minutes = IMAGE_INTERVAL)
+    return render_template("webcam.html", imgs = Image.images, nextDT = nextDateTime)
 
 if __name__ == "__main__":
     app.run(debug = True)
