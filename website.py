@@ -3,24 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 
-class PlantData(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    date_recorded = db.Column(db.DateTime, default = datetime.now())
+class Data(db.Model):    
     humidity = db.Column(db.Float, nullable = False)
     temperature = db.Column(db.Float, nullable = False)
-
-class WateringEvent(db.Model):
+    time = db.Column(db.DateTime)
     id = db.Column(db.Integer, primary_key = True)
-    date_watered = db.Column(db.DateTime, default = datetime.now())
 
 @app.route("/")
 def index():
-    pd = PlantData.query.paginate()
-    we = WateringEvent.query.paginate()
-    return render_template("index.html", plantdata=pd.query.get(pd.total), waterdata=we.query.get(we.total)) #sends most recent records from each table
+    d = Data.query.paginate()
+    return render_template("index.html", data=d.query.get(d.total)) #sends most recent records
 
 if __name__ == "__main__":
     app.run(debug = True)
