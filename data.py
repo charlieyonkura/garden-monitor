@@ -9,7 +9,7 @@ counter = 0
 sensor = adafruit_dht.DHT11(board.D4)
 
 picture_path = "/home/pi/Desktop/garden-monitor-new/static/images"
-database_path = "/home/pi/Desktop/garden-monitor-new/test.db"
+database_path = "/home/pi/Desktop/garden-monitor-new/data.db"
 
 running = True
 take_measurement = True
@@ -81,7 +81,7 @@ def control_loop():
 		take_measurement = True
 		take_picture = True
 		
-#responsible for calling functions, does the heavylifting
+#responsible for calling functions
 def function_loop(database):
 	global take_measurement
 	global take_picture
