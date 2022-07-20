@@ -1,19 +1,25 @@
 {% extends "base.html" %}
 
 {%block head%}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js" integrity="sha512-5m2r+g00HDHnhXQDbRLAfZBwPpPCaK+wPLV6lm8VQ+09ilGdHfXV7IVyKPkLOTfi4vTTUVJnz7ELs7cA87/GMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {%endblock%}
 
 {%block body%}
 <div class="content">
-    <canvas id="myChart" style="width:100%; max-width:700px"></canvas>
+    <div class="content block">
+        <canvas id="myChart" style="width:100%; max-width:700px; margin: auto"></canvas>
+        <p style="color: #ffffff">Next data point: {{nextDT.strftime("%b %d")}} {{nextDT.strftime("%I:%M %p")}}</p>
+    </div>
 </div>
 
+
+
 <script>
+    Chart.defaults.color = "#ffffff";
+    Chart.defaults.font.weight = "bold";
     const humidities = [{%for d in data%}{{d.humidity}},{%endfor%}];
     const temperatures = [{%for d in data%}{{d.temperature}},{%endfor%}];
-    const times = [{%for d in data%}"{{d.time}}",{%endfor%}];
-
+    const times = [{%for d in data%}"{{d.time.strftime("%b %d")}} {{d.time.strftime("%I:%M %p")}}",{%endfor%}];
     new Chart("myChart", {
         type: "line",
         data: {
@@ -34,20 +40,18 @@
         },
         options: {
             scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
+                xAxis: {
+                    title: {
                         display: true,
-                        labelString: "Time"
+                        text: "Time"
                     }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
+                },
+                yAxis: {
+                    title: {
                         display: true,
-                        labelString: "Temperature / Humidity"
+                        text: "Temperature / Humidity"
                     }
-                }]
+                }
             }
         }
     })
