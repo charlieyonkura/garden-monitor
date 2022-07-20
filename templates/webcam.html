@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="content">
-    <div class="block content">
+    <div class="content block">
         {%for img in imgs%}
         <img class="image transparent" src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
         {%endfor%}

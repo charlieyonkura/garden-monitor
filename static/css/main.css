@@ -23,6 +23,12 @@ h4 {
     background-color: #211F1F;
     padding: 25px
 }
+th, tr{
+    color: #ffffff;
+}
+th{
+    border: 1px solid black;
+}
 
 img.visible {
     display: block;
