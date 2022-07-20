@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -11,6 +11,9 @@ class Data(db.Model):
     temperature = db.Column(db.Float, nullable = False)
     time = db.Column(db.DateTime)
     id = db.Column(db.Integer, primary_key = True)
+
+    def __repr__(Self):
+        return "<Data " + id + ">"
 
 @app.route("/")
 def index():
