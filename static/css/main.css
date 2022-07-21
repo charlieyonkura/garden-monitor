@@ -18,6 +18,12 @@ h4 {
 form {
     display: inline-block
 }
+th, tr{
+    color: #ffffff;
+}
+th{
+    border: 1px solid black;
+}
 .block{
     background-color: #211F1F;
     padding: 25px;

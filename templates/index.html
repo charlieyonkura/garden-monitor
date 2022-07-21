@@ -5,23 +5,17 @@
 
 {% block body %}
 <div class="content">
-    <table class="yourMomCenter">
-        <tr>
-            <th>Current Moisture</th>
-            <th>Current Temperature</th>
-        </tr>
-        <tr>
-            <td>{{data.humidity}}</td>
-            <td>{{data.temperature}}</td>
-        </tr>
-        <tr>
-            <th>Moisture Threshold</th>
-            <th>Last Watering Time</th>
-        </tr>
-        <tr>
-            <td>69420</td>
-            <td>n/a</td>
-        </tr>
-    </table>
+    <div class="content block">
+        <table class="yourMomCenter">
+            <tr>
+                <th>Current Moisture</th>
+                <th>Current Temperature</th>
+            </tr>
+            <tr>
+                <td>{{data.humidity}}%</td>
+                <td>{{data.temperature}}&#176;C</td>
+            </tr>
+        </table>
+    </div>
 </div>
 {% endblock %}
