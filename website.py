@@ -16,7 +16,7 @@ class Data(db.Model):
     id = db.Column(db.Integer, primary_key = True)
 
     def __repr__(Self):
-        return "<Data " + id + ">"
+        return "<Data " + Self.id + ">"
 
 @app.route("/")
 def index():
