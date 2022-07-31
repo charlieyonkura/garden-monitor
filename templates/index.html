@@ -9,6 +9,16 @@
         <a href="webcam">
             <img class="visible content" src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
         </a>
+        <table class="center">
+            <tr>
+                <th>Current Moisture</th>
+                <th>Current Temperature</th>
+            </tr>
+            <tr>
+                <td>{{data.humidity}}%</td>
+                <td>{{data.temperature}}&#176;C</td>
+            </tr>
+        </table>
     </div>
 </div>
 {% endblock %}

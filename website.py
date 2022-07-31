@@ -8,11 +8,13 @@ import exifread
 imagesPath = os.path.relpath("static/images")
 imagePrefix = "img"
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
-db = SQLAlchemy(app)
-
+DATA_INTERVAL = 5 #minutes
 IMAGE_INTERVAL = 10 #minutes
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 class Image():
     images = []
@@ -42,17 +44,33 @@ class Image():
         return mostRecentImage
         #return Image.images[len(Image.images)]
 
+class Data(db.Model):    
+    humidity = db.Column(db.Float, nullable = False)
+    temperature = db.Column(db.Float, nullable = False)
+    time = db.Column(db.DateTime)
+    id = db.Column(db.Integer, primary_key = True)
+
+    def __repr__(Self):
+        return "<Data " + Self.id + ">"
+
 @app.route("/")
 def index():
     Image.getImages(imagesPath, imagePrefix)
     image = Image.getMostRecent()
-    return render_template("index.html", img = image)
+    d = Data.query.paginate()
+    return render_template("index.html", img = image, data=d.query.get(d.total)) #sends most recent record
 
 @app.route("/webcam/")
 def webcam():
     Image.getImages(imagesPath, imagePrefix)
     nextDateTime = Image.getMostRecent().datetime + timedelta(minutes = IMAGE_INTERVAL)
     return render_template("webcam.html", imgs = Image.images, nextDT = nextDateTime)
+
+@app.route("/data/")
+def data():
+    d = Data.query.all()
+    nextDateTime = d[len(d) - 1].time + timedelta(minutes = DATA_INTERVAL)
+    return render_template("data.html", data = d, nextDT = nextDateTime) #sends all records
 
 if __name__ == "__main__":
     app.run(debug = True)
