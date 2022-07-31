@@ -18,21 +18,41 @@ h4 {
 form {
     display: inline-block
 }
+table.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+.content{
+    margin: auto;
+    width: 60%;
+}
+.block{
+    background-color: #211F1F;
+    padding: 25px
+}
 th, tr{
     color: #ffffff;
 }
 th{
     border: 1px solid black;
 }
-.block{
-    background-color: #211F1F;
-    padding: 25px;
-}
-.content{
-    margin: auto;
-    width: 60%;
-}
-.yourMomCenter{
+
+img.visible {
+    display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+}
+img.transparent {
+    display: none;
+}
+img.active {
+    display: inline;
+}
+img.hidden {
+    display: none;
+}
+img.button {
+    width: 20%;
+    cursor: pointer;
 }

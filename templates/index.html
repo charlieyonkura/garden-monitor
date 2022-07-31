@@ -6,7 +6,10 @@
 {% block body %}
 <div class="content">
     <div class="content block">
-        <table class="yourMomCenter">
+        <a href="webcam">
+            <img class="visible content" src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
+        </a>
+        <table class="center">
             <tr>
                 <th>Current Moisture</th>
                 <th>Current Temperature</th>

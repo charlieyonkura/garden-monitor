@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="content block">
+        {%for img in imgs%}
+        <img class="image transparent" src="../{{img.path.replace("\\", "/")}}" alt="{{img.prefix + img.number}}">
+        {%endfor%}
+        <br>
+        <table style="margin: auto; background-color: #343131">
+            <tr>
+                <th>This Image</th>
+                <th>Next Image</th>
+            </tr>
+            <tr>
+                <td id="this">n/a</td>
+                <td id="next">n/a</td>
+            </tr>
+        </table>
+        <img id="backward" class="button active" onclick="regress()" src="{{url_for("static", filename = "icons/backward.png")}}">
+        <img id="play" class="button active" onclick="play()" src="{{url_for("static", filename = "icons/play.png")}}">
+        <img id="pause" class="button hidden" onclick="pause()" src="{{url_for("static", filename = "icons/pause.png")}}">
+        <img id="forward" class="button active" onclick="advance()" src="{{url_for("static", filename = "icons/forward.png")}}">
+    </div>
+</div>
+<script>{% include "webcamScript.js" %}</script>
+{% endblock %}
