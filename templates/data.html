@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{%block head%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js" integrity="sha512-5m2r+g00HDHnhXQDbRLAfZBwPpPCaK+wPLV6lm8VQ+09ilGdHfXV7IVyKPkLOTfi4vTTUVJnz7ELs7cA87/GMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{%endblock%}
+
+{%block body%}
+<div class="content">
+    <div class="content block">
+        <canvas id="myChart" style="width:100%; max-width:700px; margin: auto"></canvas>
+        <p style="color: #ffffff">Next data point: {{nextDT.strftime("%b %d")}} {{nextDT.strftime("%I:%M %p")}}</p>
+    </div>
+</div>
+
+
+
+<script>
+    Chart.defaults.color = "#ffffff";
+    Chart.defaults.font.weight = "bold";
+    const humidities = [{%for d in data%}{{d.humidity}},{%endfor%}];
+    const temperatures = [{%for d in data%}{{d.temperature}},{%endfor%}];
+    const times = [{%for d in data%}"{{d.time.strftime("%b %d")}} {{d.time.strftime("%I:%M %p")}}",{%endfor%}];
+    new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: times,
+            datasets: [
+                {
+                    label: "Humidity",
+                    data: humidities,
+                    backgroundColor: "rgb(0,0,0,0)",
+                    borderColor: "rgb(0,0,255)"
+                }, {
+                    label: "Temperature",
+                    data: temperatures,
+                    backgroundColor: "rgb(0,0,0,0)",
+                    borderColor: "rgb(255,0,0)",
+                }
+            ]
+        },
+        options: {
+            scales: {
+                xAxis: {
+                    title: {
+                        display: true,
+                        text: "Time"
+                    }
+                },
+                yAxis: {
+                    title: {
+                        display: true,
+                        text: "Temperature / Humidity"
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+{%endblock%}

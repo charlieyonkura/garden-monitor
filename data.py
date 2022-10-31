@@ -1,15 +1,17 @@
 import time
 import os
 import threading
+from datetime import datetime
 import board
 import adafruit_dht
 import sqlite3
+from exif import Image
 
 counter = 0
 sensor = adafruit_dht.DHT11(board.D4)
 
 picture_path = "/home/pi/Desktop/garden-monitor-new/static/images"
-database_path = "/home/pi/Desktop/garden-monitor-new/test.db"
+database_path = "/home/pi/Desktop/garden-monitor-new/data.db"
 
 running = True
 take_measurement = True
@@ -30,8 +32,19 @@ def store_picture(path):
 	if os.path.exists(path) == False:
 		os.mkdir(path)
 
-	data = "fswebcam " + path + "/" + image_name + (str)(counter) + ".jpg"
+	filename = path + "/" + image_name + (str)(counter) + ".jpg"
+
+	data = "fswebcam " + filename
 	os.system(data)
+
+	#write exif data
+	file = open(filename, "rb")
+	exiftags = Image(file)
+	exiftags.datetime = datetime.now().strftime("%Y:%m:%d %H:%M:%S")
+	file.close()
+	new_file = open(filename, "wb")
+	new_file.write(exiftags.get_file())
+	new_file.close()
 	
 # use DHT11
 def find_temp():
@@ -81,7 +94,7 @@ def control_loop():
 		take_measurement = True
 		take_picture = True
 		
-#responsible for calling functions, does the heavylifting
+#responsible for calling functions
 def function_loop(database):
 	global take_measurement
 	global take_picture
