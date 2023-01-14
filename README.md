@@ -1,6 +1,6 @@
 # garden-monitor
 
-Dates: June 2022 - Aug 2022
+Dates: Jun 2022 - Aug 2022
 
 This project is designed to use a humidity sensor and a webcam attached to a Raspberry Pi to monitor a plant. Screenshots of the project are available at [https://drive.google.com/file/d/1CBIV4ubFYGr8wDfhQAVmXnHRjojThTfM/view?usp=share_link.](https://drive.google.com/drive/folders/1F9gYaw1Wh0qC8uF8INX5b2zW-2qEpNs8?usp=share_link)
 
